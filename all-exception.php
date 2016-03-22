@@ -10,6 +10,15 @@ set_exception_handler( function( $e ){
     var_dump( $e->getMessage() );
 } );
 
+set_error_handler( function( $errno, $errstr, $errfile, $errline ){
+    if ( !( error_reporting() & $errno )){
+        //error_reporting没有设置这个错误，将其忽略
+        return;
+    }
+
+    throw new Exception( $errstr, $errno );
+} );
+
 
 try {
 
